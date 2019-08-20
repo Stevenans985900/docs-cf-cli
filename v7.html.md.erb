@@ -9,18 +9,16 @@ This topic describes the major changes between the cf CLI v6 and cf CLI v7.
 ## <a id="overview"></a> Overview
 
 
-The cf CLI v7's, and the backing v3 CC API, main goal is to unlock new app developer workflows for users who require granular control of their apps and other, more advanced, deployment strategies; see [New Workflows Supported](#new-workflows) for more information. The v3 CC API unlocks developer workflows that were previously limited by the v2 CC API. 
+The cf CLI v7's, and the backing v3 CC API, main goal is to unlock new app developer workflows for users who require granular control of their apps and other, more advanced, deployment strategies - feature development which were limited by the v2 CC API.  
+
 In order to do so, the cf CLI v7 beta is under active development to convert commands to call the [Cloud Foundry API (CC API) v3](https://v3-apidocs.cloudfoundry.org/index.html#introduction) instead of the [CC API v2](http://apidocs.cloudfoundry.org/). 
 
-Since both the cf CLI v7 beta and the backing CC API v3 are both in active development, it is important to note that the cf CLI v7 beta is subject to change as we move toward completing development. However, we aim to provide:
-- a seamless upgrade experience from the cf CLI v6. To do so, we've kept changes to a minimal, and where there are changes we've incorporated feedback from the Community to simplify the cf CLI user experience
-- where a change was made that might potentially cause a breaking change in a scripting environment, we've provided details below and alternative workflows where possible
+**Important Notes about v7 beta CLI**
 
-To understand the differences between specific commands, see [Command Differences](#differences). 
+- Since both the v7 beta cf CLI and the backing CC API v3 are both in active development, it is important to note that the v7 beta cf CLI is subject to change as we move toward completing development. Therefore, using the v7 beta cf CLI in scripts is not recommended.  To understand the differences between v6 versus v7 commands, see [Command Differences](#differences). 
+- Not all cf CLI v7 commands are backed by the CC API v3. As a result, commands still fall back to the v2 API. As we release the v7 beta cf CLI, more v3 resources will be developed along with the v7 beta cf CLI support for it. 
+- In order to complete the v7 beta cf CLI in a timely matter, we develop and test against the latest CAPI release candidate. When v7 cf CLI is generally available, we will start supporting official CC API releases again. 
 
-<p class="note"><strong>Note</strong>: Additionally, in order to complete the cf CLI v7 beta in a timely matter, we develop and test against the latest CAPI release candidate. </p>
-
-<p class="note"><strong>Note</strong>: Since the cf CLI v7 is in beta mode, not all cf CLI v7 commands are backed by the CC API v3. As a result, commands still fall back to the v2 API. As we release the cf CLI v7 beta, more v3 resources will be developed along with the cf CLI v7 support for it.</p>
 
 ## <a id="new-workflows"></a> New Workflows Supported on the cf CLI v7
 
@@ -55,10 +53,11 @@ Scriptors should also be aware of other changes, which were first introduced as 
 - v3-backed v7 CLI beta commands now output errors and warnings to <code>stderr</code> rather than <code>stdout</code> to make simplify debugging 
 - stylistic changes including flavor text [updates](https://github.com/cloudfoundry/cli/wiki/CF-CLI-Style-Guide#colors)
 - key value and table column headers are displayed in lowercase
-- output text errors are now, where possible, returned directly from the CC API. The cf CLI v7 beta no longer wraps CC API error texts. 
+- output text errors are now, where possible, returned directly from the CC API; the cf CLI v7 beta no longer wraps CC API error texts. 
 - single quote resource names in error cases
+- a change to exit codes for the `create-buildpack` when using it with stack associations
 
-To view full release notes for cf CLI v7, see [V7 Beta Release](https://github.com/cloudfoundry/cli/wiki/V7-Beta-Release) and the [official release page](https://github.com/cloudfoundry/cli/releases) in the cf CLI GitHub repository. 
+In addition,  view full release notes for cf CLI v7, see [V7 Beta Release](https://github.com/cloudfoundry/cli/wiki/V7-Beta-Release) and the [official release page](https://github.com/cloudfoundry/cli/releases) in the cf CLI GitHub repository. 
 
 <table>
 <tr>
@@ -93,6 +92,7 @@ To view full release notes for cf CLI v7, see [V7 Beta Release](https://github.c
 		<li><strong>[Removed flag]</strong>: <code>--enable</code>. Creating a buildpack enables it by default.</li>
 		<li><strong>[Removed flag]</strong>: <code>--disable</code>. There is no way to disable a buildpack upon creation.</li>
 		<li><strong>[Update]</strong>: Creating a buildpack with position set to zero is no longer valid.</li>
+		<li><strong>[Update]</strong>: The command now exits with `1` when there are failures related to creating a buildpack with stack associations.</li>
 	</ul> 
 </td>
 </tr>
